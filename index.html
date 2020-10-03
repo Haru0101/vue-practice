@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="app">
+        {{ message }}
+    </div>
 
     <!-- 開発バージョン -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -14,7 +17,12 @@
     <script>
         // 慣例でappにする（vmも使われる）
         var app = new Vue ({
-            
+            // オプション
+            // idがappの中にVueを適用する
+            el: '#app',
+            data: {
+                message: 'Hello, Vue.js!'
+            }
         });
     </script>
 </body>
