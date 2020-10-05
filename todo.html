@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>TODO LIST</h1>
+        <!-- 送信して違うページに行かないようにサブミットを制御 -->
+        <form v-on:submit.prevent>
+            <input type="text" v-model="newItem"><button @click="addItem">Add</button>
+            <ul>
+                <li v-for="task in tasks" :class="{'isDone': task.isDone}"><label for=""><input type="checkbox" v-model="task.isDone">{{ task.item }}</label></li>
+            </ul>
+        </form>
+        <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                newItem: null,
+                tasks: [],
+            },
+            methods: {
+                addItem: function () {
+                    if(this.newItem == null) return;
+                    // オブジェクトをプッシュするときは変数に入れるとスッキリする
+                    var task = {
+                        item: this.newItem,
+                        isDone: false
+                    }
+                    this.tasks.push(task);
+                    this.newItem = null;
+                }
+            }
+        })
+    </script>
+    <style>
+        .isDone {
+            text-decoration: line-through;
+        }
+    </style>
+</body>
+
+</html>
