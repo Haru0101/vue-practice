@@ -14,7 +14,7 @@
         <form v-on:submit.prevent>
             <input type="text" v-model="newItem"><button @click="addItem">Add</button>
             <ul>
-                <li v-for="task in tasks" :class="{'isDone': task.isDone}"><label for=""><input type="checkbox" v-model="task.isDone">{{ task.item }}</label></li>
+                <li v-for="(task, index) in tasks" :class="{'isDone': task.isDone}"><input type="checkbox" v-model="task.isDone">{{ task.item }}<button @click="deleteItem(index)">Delete</button></li>
             </ul>
         </form>
         <pre>{{$data}}</pre>
@@ -37,6 +37,11 @@
                     }
                     this.tasks.push(task);
                     this.newItem = null;
+                },
+                deleteItem: function (index) {
+                    // 第一引数：削除を開始する位置
+                    // 第二引数：削除する数
+                    this.tasks.splice(index, 1);
                 }
             }
         })
