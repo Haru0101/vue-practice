@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <div id="app">
-        {{ message }}
+    <div id="app" v-if="toggle">
+        <hello-component></hello-component>
+        <hello-component></hello-component>
+        <hello-component></hello-component>
+        <p>{{ message }}</p>
+        <!-- 配列の描写 -->
+        <ul>
+            <li v-for="color in colors">{{ color }}</li>
+        </ul>
+        <hr>
+        <!-- オブジェクトの描写 -->
+        <ul>
+            <li v-for="(value, key) in user">{{key}}：{{value}}</li>
+        </ul>
+        <hr>
+        <input type="text" :value="message">
+        <button @click="displayNowDate">Click!</button>
+        <p>
+            {{now}}
+        </p>
+        <input type="text" v-model:value="message">
+        <p>{{message}}</p>
+        <input type="text" v-model:value="message">
+        <ul>
+            <li v-for="language in laguages">{{ language }}</li>
+        </ul>
     </div>
 
     <!-- 開発バージョン -->
@@ -15,22 +41,34 @@
     <!-- 本番バージョン -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16"></script> -->
     <script>
+        Vue.component('hello-component', {
+            template: '<p>Hello</p>'
+        });
         // 慣例でappにする（vmも使われる）
-        var app = new Vue ({
+        var app = new Vue({
             // オプション
             // idがappの中にVueを適用する
             el: '#app',
             data: {
                 message: 'Hello, Vue.js!',
-                count: 0,
+                count: 10,
                 user: {
                     lastName: 'Yamada',
                     firstName: 'Taro',
                     prefecture: 'Tokyo'
                 },
-                colors: ['red', 'green','bleu']
+                colors: ['red', 'green', 'blue'],
+                toggle: true,
+                now: "",
+                laguages: ['JavaScript', 'Ruby', 'Python']
+            },
+            methods: {
+                displayNowDate: function () {
+                    this.now = new Date().toLocaleDateString();
+                }
             }
         });
     </script>
 </body>
+
 </html>
