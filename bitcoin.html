@@ -11,13 +11,18 @@
 <body>
     <div id="app">
         <h1>Bitcoin Price</h1>
-        <ul v-cloak>
-            <!-- rateが値で、currencyがキー -->
-            <li v-for="(rate, currency) in bpi">
-                <!-- 小数点以下切り捨てのフィルターは表示時に実行できる -->
-                {{currency}}：{{rate.rate_float | currencyDecimal}}
-            </li>
-        </ul>
+        <section v-if="hasError">
+            Error.
+        </section>
+        <section v-else>
+            <ul v-cloak>
+                <!-- rateが値で、currencyがキー -->
+                <li v-for="(rate, currency) in bpi">
+                    <!-- 小数点以下切り捨てのフィルターは表示時に実行できる -->
+                    {{currency}}：{{rate.rate_float | currencyDecimal}}
+                </li>
+            </ul>
+        </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -25,23 +30,25 @@
         var app = new Vue({
             el: "#app",
             data: {
-                bpi: null
+                bpi: null,
+                hasError: false
             },
             mounted: function () {
                 axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-                .then(function(response){
-                    this.bpi = response.data.bpi;
-                    console.log(this.bpi);
-                    // bind(this)がないと、thisの参照先がwindowになる。bindがあると、thisはVueオブジェクトを意味する
-                }.bind(this))
-                // 通信エラーの捕捉
-                .catch(function(error){
-                    // 試しにAPIのURLをデタラメにするとエラーが見れる
-                    console.log(error);
-                })
+                    .then(function (response) {
+                        this.bpi = response.data.bpi;
+                        console.log(this.bpi);
+                        // bind(this)がないと、thisの参照先がwindowになる。bindがあると、thisはVueオブジェクトを意味する
+                    }.bind(this))
+                    // 通信エラーの捕捉
+                    .catch(function (error) {
+                        // 試しにAPIのURLをデタラメにするとエラーが見れる
+                        this.hasError = true;
+                        console.log(error);
+                    }.bind(this))
             },
             filters: {
-                currencyDecimal(value){
+                currencyDecimal(value) {
                     // 数を固定小数点方式で丸める
                     return value.toFixed(2);
                 }
