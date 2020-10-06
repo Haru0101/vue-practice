@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Bitcoin価格表示</title>
 </head>
 
 <body>
     <div id="app">
         <h1>Bitcoin Price</h1>
-        <ul>
+        <ul v-cloak>
             <!-- rateが値で、currencyがキー -->
             <li v-for="(rate, currency) in bpi">
                 <!-- 小数点以下切り捨てのフィルターは表示時に実行できる -->
