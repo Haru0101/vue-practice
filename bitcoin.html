@@ -13,7 +13,8 @@
         <ul>
             <!-- rateが値で、currencyがキー -->
             <li v-for="(rate, currency) in bpi">
-                {{currency}}：{{rate.rate_float}}
+                <!-- 小数点以下切り捨てのフィルターは表示時に実行できる -->
+                {{currency}}：{{rate.rate_float | currencyDecimal}}
             </li>
         </ul>
     </div>
@@ -37,6 +38,12 @@
                     // 試しにAPIのURLをデタラメにするとエラーが見れる
                     console.log(error);
                 })
+            },
+            filters: {
+                currencyDecimal(value){
+                    // 数を固定小数点方式で丸める
+                    return value.toFixed(2);
+                }
             }
         })
     </script>
