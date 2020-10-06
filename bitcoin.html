@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin価格表示</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Bitcoin Price</h1>
+        <ul>
+            <!-- rateが値で、currencyがキー -->
+            <li v-for="(rate, currency) in bpi">
+                {{currency}}：{{rate.rate_float}}
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                bpi: null
+            },
+            mounted: function () {
+                axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+                .then(function(response){
+                    this.bpi = response.data.bpi;
+                    console.log(this.bpi);
+                    // bind(this)がないと、thisの参照先がwindowになる。bindがあると、thisはVueオブジェクトを意味する
+                }.bind(this))
+                // 通信エラーの捕捉
+                .catch(function(error){
+                    // 試しにAPIのURLをデタラメにするとエラーが見れる
+                    console.log(error);
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
