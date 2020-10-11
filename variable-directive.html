@@ -23,13 +23,19 @@
         <p v-pre>
             {{ message }}
         </p>
+        <!-- v-htmlでHTML要素をHTMLとして解釈して出力している -->
+        <!-- XSS脆弱性を引き起こす可能性があるため、慎重に使用する -->
+        <p>
+            {{ htmlMessage }}
+        </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: '#app',
             data: {
-                message: 'Hello, Vue.js!'
+                message: 'Hello, Vue.js!',
+                htmlMessage: '<span style="color: red;">HTMLデータ</span>'
             },
             methods: {
                 clickHandler: function () {
