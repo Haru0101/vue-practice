@@ -10,6 +10,7 @@
 <body>
     <div id="app">
         <h2>マスタッシュ</h2>
+        <!-- フィルターの連結 -->
         <p>{{ jpyPrice | toUSD | numberFormat}}</p>
         <h2>v-bind</h2>
         <input type="text" :value="jpyPrice | numberFormat">
