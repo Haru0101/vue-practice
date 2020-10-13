@@ -10,22 +10,28 @@
 <body>
     <div id="app">
         <h2>マスタッシュ</h2>
-        <p>{{ price | numberFormat }}</p>
+        <p>{{ jpyPrice | toUSD | numberFormat}}</p>
         <h2>v-bind</h2>
-        <input type="text" :value="price | numberFormat">
+        <input type="text" :value="jpyPrice | numberFormat">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        // Vue.filter('numberFormat', function(value){
+        //     return value.toLocaleString()
+        // })
         var app = new Vue({
             el: '#app',
             data: {
-                price: 29800
+                jpyPrice: 29800000
             },
             methods: {
             },
             filters: {
                 numberFormat: function (value) {
                     return value.toLocaleString()
+                },
+                toUSD: function (value) {
+                    return parseInt(value / 105);
                 }
             }
         })
