@@ -10,7 +10,11 @@
 <body>
     <div id="app">
         <!-- computedは一度定義すれば使い回しもかんたん -->
+        <!-- メソッドではないので、()はいらない -->
+        <!-- dataのメッセージが変更されない限り、キャッシュされるので再実行されない＝軽い -->
+        <!-- メソッドは呼び出されるたびに関数の処理を行う -->
        <p>{{ reversedMessage }}</p>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
